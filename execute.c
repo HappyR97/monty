@@ -79,7 +79,7 @@ void execute_opcode(opcode_func func, char *opcode,
 		if (value == NULL)
 			handle_error(5, line_number);
 		for (i = 0; value[i] != '\0'; i++)
-			if (isdigit(value[i] == 0))
+			if (isdigit(value[i]) == 0)
 				handle_error(5, line_number);
 		new_node = create_node(atoi(value) * sign);
 		func(&new_node, line_number);

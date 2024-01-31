@@ -103,8 +103,7 @@ void handle_error(int reference, ...)
 			fprintf(stderr, "USAGE: monty file\n");
 			break;
 		case 2:
-			fprintf(stderr, "Error: Can't open file %s\n",
-				va_arg(ag, char *));
+			fprintf(stderr, "Error: Can't open file %s\n", va_arg(ag, char *));
 			break;
 		case 3:
 			line_number = va_arg(ag, int);
