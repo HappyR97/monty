@@ -37,6 +37,7 @@ void select_opcode(char *opcode, char *value, int line_number)
 	instruction_t op_list[] = {
 		{"push", push},
 		{"pall", pall},
+		{"pint", pint},
 		{NULL, NULL}
 	};
 

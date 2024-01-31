@@ -50,6 +50,7 @@ void read_file(FILE *fd);
 /*Opcodes*/
 void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
+void pint(stack_t **stack, unsigned int line_number);
 /*Execution*/
 void parse(char *buffer, int line_number);
 void select_opcode(char *opcode, char *value, int line_number);

@@ -51,3 +51,20 @@ void pall(stack_t **stack, unsigned int line_number)
 		tmp = tmp->next;
 	}
 }
+
+/**
+ * pint - prints the value at the top of the stack
+ * @stack: pointer to stack node (unused)
+ * @line_number: number of line for opcode
+ *
+ * Return: void
+ */
+
+void pint(stack_t **stack, unsigned int line_number)
+{
+	(void) stack;
+
+	if (head == NULL)
+		handle_error(6, line_number);
+	printf("%d\n", head->n);
+}
