@@ -40,7 +40,7 @@ void pall(stack_t **stack, unsigned int line_number)
 	(void) stack;
 
 	if (head == NULL)
-		exit(EXIT_FAILURE);
+		return;
 	tmp = head;
 	while (tmp)
 	{
