@@ -9,11 +9,11 @@
 */
 void push(stack_t **stack, unsigned int line_number)
 {
+	stack_t *temp;
 	(void) line_number;
 
 	if (stack == NULL || *stack == NULL)
 	{
-		free_stack();
 		exit(EXIT_FAILURE);
 	}
 	if (head == NULL)
@@ -22,9 +22,10 @@ void push(stack_t **stack, unsigned int line_number)
 		return;
 	}
 
-	(*stack)->next = head;
-	head->prev = *stack;
+	temp = head;
 	head = *stack;
+	head->next = temp;
+	temp->prev = head;
 }
 
 /**
