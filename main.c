@@ -39,6 +39,7 @@ int main(int argc, char **argv)
  * execute - executes the opcode
  * @command: command string
  * @line_number: number of the line
+ * @buffer: buffer read from file
  *
  * Return: void
 */
