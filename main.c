@@ -58,8 +58,7 @@ void execute(char *command, int line_number)
 		if (cmd[1] == NULL || !is_number(cmd[1]))
 		{
 			fprintf(stderr, "L%d: usage: push integer\n", line_number);
-			free(temp);
-			free_stack(&head);
+			free(temp), free(command), free_stack();
 			exit(EXIT_FAILURE);
 		}
 		node = create_node(atoi(cmd[1]));
@@ -79,8 +78,7 @@ void execute(char *command, int line_number)
 	if (opcodes[i].opcode == NULL)
 	{
 		fprintf(stderr, "L%d: unknown instruction %s\n", line_number, cmd[0]);
-		free(temp);
-		free_stack(&head);
+		free(temp), free(command), free_stack();
 		exit(EXIT_FAILURE);
 	}
 	free(temp);

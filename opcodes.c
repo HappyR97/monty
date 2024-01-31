@@ -12,8 +12,10 @@ void push(stack_t **stack, unsigned int line_number)
 	(void) line_number;
 
 	if (stack == NULL || *stack == NULL)
+	{
+		free_stack();
 		exit(EXIT_FAILURE);
-
+	}
 	if (head == NULL)
 	{
 		head = *stack;

@@ -72,20 +72,19 @@ stack_t *create_node(int value)
 
 /**
  * free_stack - Frees the stack
- * @head: head pointer
  *
  * Return: void
  */
 
-void free_stack(stack_t **head)
+void free_stack(void)
 {
 	stack_t *ptr;
 
-	while (*head != NULL)
+	while (head != NULL)
 	{
-		ptr = (*head)->next;
-		free(*head);
-		*head = ptr;
+		ptr = head->next;
+		free(head);
+		head = ptr;
 		}
 }
 
