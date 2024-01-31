@@ -44,7 +44,7 @@ typedef struct instruction_s
 extern stack_t *head;
 
 char *open_read_file(char *filename);
-void execute(char *command, int line_number);
+void execute(char *command, unsigned int line_number, char *buffer);
 stack_t *create_node(int value);
 void free_stack(void);
 void push(stack_t **stack, unsigned int line_number);

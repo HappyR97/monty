@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 	token = strtok_r(buffer, "\n", &ptr1);
 	while (token)
 	{
-		execute(token, line_number);
+		execute(token, line_number, buffer);
 		token = strtok_r(NULL, "\n", &ptr1);
 		line_number++;
 	}
@@ -43,7 +43,7 @@ int main(int argc, char **argv)
  * Return: void
 */
 
-void execute(char *command, int line_number)
+void execute(char *command, unsigned int line_number, char *buffer)
 {
 	char *cmd[2], *temp, *ptr2;
 	int i = 0;
@@ -58,7 +58,7 @@ void execute(char *command, int line_number)
 		if (cmd[1] == NULL || !is_number(cmd[1]))
 		{
 			fprintf(stderr, "L%d: usage: push integer\n", line_number);
-			free(temp), free(command), free_stack();
+			free(temp), free(buffer), free_stack();
 			exit(EXIT_FAILURE);
 		}
 		node = create_node(atoi(cmd[1]));
