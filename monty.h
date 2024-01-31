@@ -10,6 +10,7 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <ctype.h>
+#include <stdarg.h>
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -41,15 +42,24 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
+typedef void (*opcode_func)(stack_t **, unsigned int);
 extern stack_t *head;
-
-void open_read_file(char *filename);
-void execute(char *opcode, char *value, int line_number);
-stack_t *create_node(int value);
-void free_stack(void);
+/*File handling*/
+void open_file(char *filename);
+void read_file(FILE *fd);
+/*Opcodes*/
 void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
+/*Execution*/
+void parse(char *buffer, int line_number);
+void select_opcode(char *opcode, char *value, int line_number);
+void execute_opcode(opcode_func func, char *opcode,
+		char *value, int line_number);
+/*Utils*/
+stack_t *create_node(int value);
+void free_stack(void);
 int is_number(char *str);
 int is_line_empty(const char *line);
+void handle_error(int reference, ...);
 
 #endif /*MONTY_H*/

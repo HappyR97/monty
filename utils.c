@@ -13,11 +13,7 @@ stack_t *create_node(int value)
 
 	new_node = malloc(sizeof(stack_t));
 	if (!new_node)
-	{
-		fprintf(stderr, "Error: malloc failed\n");
-		free_stack();
-		exit(EXIT_FAILURE);
-	}
+		handle_error(4);
 	new_node->n = value;
 	new_node->next = NULL;
 	new_node->prev = NULL;
@@ -35,12 +31,14 @@ void free_stack(void)
 {
 	stack_t *ptr;
 
+	if (head == NULL)
+		return;
 	while (head != NULL)
 	{
-		ptr = head->next;
-		free(head);
-		head = ptr;
-		}
+		ptr = head;
+		head = head->next;
+		free(ptr);
+	}
 }
 
 /**
@@ -83,4 +81,43 @@ int is_line_empty(const char *line)
 		line++;
 	}
 	return (1);
+}
+
+/**
+ * handle_error - Prints relevant error message and exits
+ * @reference: error reference number
+ *
+ * Return: void
+*/
+
+void handle_error(int reference, ...)
+{
+	va_list ag;
+	char *opcode;
+	int line_number;
+
+	va_start(ag, reference);
+	switch (reference)
+	{
+		case 1:
+			fprintf(stderr, "USAGE: monty file\n");
+			break;
+		case 2:
+			fprintf(stderr, "Error: Can't open file %s\n",
+				va_arg(ag, char *));
+			break;
+		case 3:
+			line_number = va_arg(ag, int);
+			opcode = va_arg(ag, char *);
+			fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
+			break;
+		case 4:
+			fprintf(stderr, "Error: malloc failed\n");
+			break;
+		case 5:
+			fprintf(stderr, "L%d: usage: push integer\n", va_arg(ag, int));
+			break;
+		default:
+			break;
+	}
 }
