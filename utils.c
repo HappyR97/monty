@@ -116,6 +116,10 @@ void handle_error(int reference, ...)
 		case 5:
 			fprintf(stderr, "L%d: usage: push integer\n", va_arg(ag, int));
 			break;
+		case 6:
+			line_number = va_arg(ag, int);
+			fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
+			break;
 		default:
 			break;
 	}
