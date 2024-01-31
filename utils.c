@@ -1,55 +1,6 @@
 #include "monty.h"
 
 /**
- * open_read_file - Opens and reads a file
- * @filename: Name of file to open and read
- *
- * Return: buffer (str)
-*/
-
-char *open_read_file(char *filename)
-{
-	int fd;
-	ssize_t r;
-	struct stat statbuf;
-	char *buffer;
-
-	fd = open(filename, O_RDONLY);
-	if (fd == -1)
-	{
-		fprintf(stderr, "Error: Can't open file %s\n", filename);
-		exit(EXIT_FAILURE);
-	}
-	if (fstat(fd, &statbuf) == -1)
-	{
-		fprintf(stderr, "Error: Can't get file size\n");
-		close(fd);
-		exit(EXIT_FAILURE);
-	}
-
-	buffer = malloc(statbuf.st_size + 1);
-	if (!buffer)
-	{
-		fprintf(stderr, "Error: malloc failed\n");
-		close(fd);
-		exit(EXIT_FAILURE);
-	}
-
-	r = read(fd, buffer, statbuf.st_size);
-	if (r == -1)
-	{
-		fprintf(stderr, "Error: Reading file\n");
-		close(fd);
-		free(buffer);
-		exit(EXIT_FAILURE);
-	}
-	buffer[r] = '\0';
-
-	close(fd);
-	return (buffer);
-}
-
-/**
  * create_node - Create a stack_t node
  * @value: n member of node
  *
@@ -62,7 +13,11 @@ stack_t *create_node(int value)
 
 	new_node = malloc(sizeof(stack_t));
 	if (!new_node)
-		return (NULL);
+	{
+		fprintf(stderr, "Error: malloc failed\n");
+		free_stack();
+		exit(EXIT_FAILURE);
+	}
 	new_node->n = value;
 	new_node->next = NULL;
 	new_node->prev = NULL;
@@ -108,6 +63,24 @@ int is_number(char *str)
 		if (!isdigit((unsigned char)*str))
 			return (0);
 		str++;
+	}
+	return (1);
+}
+
+/**
+ * is_line_empty - checks if a line is empty
+ * @line: line to check
+ *
+ * Return: 1 if empty, 0 if not
+*/
+
+int is_line_empty(const char *line)
+{
+	while (*line != '\0')
+	{
+		if (!isspace((unsigned char)*line))
+			return (0);
+		line++;
 	}
 	return (1);
 }

@@ -12,75 +12,94 @@ stack_t *head = NULL;
 
 int main(int argc, char **argv)
 {
-	unsigned int line_number = 1;
-	char *token, *ptr1, *buffer;
-
 	if (argc != 2)
 	{
 		fprintf(stderr, "USAGE: monty file\n");
 		exit(EXIT_FAILURE);
 	}
-
-	buffer = open_read_file(argv[1]);
-	token = strtok_r(buffer, "\n", &ptr1);
-	while (token)
-	{
-		execute(token, line_number, buffer);
-		token = strtok_r(NULL, "\n", &ptr1);
-		line_number++;
-	}
-	line_number--;
-	free(buffer);
+	open_read_file(argv[1]);
 	free_stack();
 	return (0);
 }
 
 /**
+ * open_read_file - Opens and reads a file
+ * @filename: Name of file to open and read
+ *
+ * Return: buffer (str)
+*/
+
+void open_read_file(char *filename)
+{
+	char *buffer = NULL, *opcode, *value;
+	size_t len = 0;
+	int line_number;
+	FILE *fd = fopen(filename, "r");
+
+	if (filename == NULL || fd == NULL)
+	{
+		fprintf(stderr, "Error: Can't open file %s\n", filename);
+		exit(EXIT_FAILURE);
+	}
+	for (line_number = 1; getline(&buffer, &len, fd) != -1; line_number++)
+	{
+		if (buffer == NULL)
+		{
+			fprintf(stderr, "Error: malloc failed\n");
+			exit(EXIT_FAILURE);
+		}
+		if (is_line_empty(buffer))
+			continue;
+		printf("buffer: %s\n", buffer);
+		opcode = strtok(buffer, "\n ");
+		value = strtok(NULL, "\n ");
+		printf("opcode: %s, value: %s\n", opcode, value);
+		execute(opcode, value, line_number);
+	}
+	free(buffer);
+	fclose(fd);
+}
+
+/**
  * execute - executes the opcode
- * @command: command string
+ * @opcode: opcode to execute
+ * @value: value associated to opcode
  * @line_number: number of the line
- * @buffer: buffer read from file
  *
  * Return: void
 */
 
-void execute(char *command, unsigned int line_number, char *buffer)
+void execute(char *opcode, char *value, int line_number)
 {
-	char *cmd[2], *temp, *ptr2;
 	int i = 0;
 	stack_t *node = NULL;
-	instruction_t opcodes[] = {{"push", push}, {"pall", pall}, {NULL, NULL},};
+	instruction_t funcs[] = {{"push", push}, {"pall", pall}, {NULL, NULL},};
 
-	temp = strdup(command);
-	cmd[0] = strtok_r(temp, " ", &ptr2);
-	cmd[1] = strtok_r(NULL, " ", &ptr2);
-	if (strcmp(cmd[0], "push") == 0)
+	if (strcmp(opcode, "push") == 0)
 	{
-		if (cmd[1] == NULL || !is_number(cmd[1]))
+		if (value == NULL || !is_number(value))
 		{
 			fprintf(stderr, "L%d: usage: push integer\n", line_number);
-			free(temp), free(buffer), free_stack();
+			free_stack();
 			exit(EXIT_FAILURE);
 		}
-		node = create_node(atoi(cmd[1]));
+		node = create_node(atoi(value));
 		push(&node, line_number);
-		free(temp);
 		return;
 	}
-	while (opcodes[i].opcode)
+	while (funcs[i].opcode)
 	{
-		if (strcmp(opcodes[i].opcode, cmd[0]) == 0)
+		if (strcmp(funcs[i].opcode, opcode) == 0)
 		{
-			opcodes[i].f(&head, line_number);
+			funcs[i].f(&head, line_number);
 			break;
 		}
 		i++;
 	}
-	if (opcodes[i].opcode == NULL)
+	if (funcs[i].opcode == NULL)
 	{
-		fprintf(stderr, "L%d: unknown instruction %s\n", line_number, cmd[0]);
-		free(temp), free(buffer), free_stack();
+		fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
+		free_stack();
 		exit(EXIT_FAILURE);
 	}
-	free(temp);
 }

@@ -43,12 +43,13 @@ typedef struct instruction_s
 
 extern stack_t *head;
 
-char *open_read_file(char *filename);
-void execute(char *command, unsigned int line_number, char *buffer);
+void open_read_file(char *filename);
+void execute(char *opcode, char *value, int line_number);
 stack_t *create_node(int value);
 void free_stack(void);
 void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
 int is_number(char *str);
+int is_line_empty(const char *line);
 
 #endif /*MONTY_H*/
