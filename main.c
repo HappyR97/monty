@@ -79,7 +79,7 @@ void execute(char *command, int line_number)
 	}
 	if (opcodes[i].opcode == NULL)
 	{
-		fprintf(stderr, "L%d: unknown instruction %sn", line_number, cmd[0]);
+		fprintf(stderr, "L%d: unknown instruction %s\n", line_number, cmd[0]);
 		free(temp);
 		exit(EXIT_FAILURE);
 	}
