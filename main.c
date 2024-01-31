@@ -31,6 +31,7 @@ int main(int argc, char **argv)
 	}
 	line_number--;
 	free(buffer);
+	free_stack(&head);
 	return (0);
 }
 
@@ -47,11 +48,8 @@ void execute(char *command, int line_number)
 	char *cmd[2], *temp, *ptr2;
 	int i = 0;
 	stack_t *node = NULL;
-	instruction_t opcodes[] = {
-		{"push", push},
-		{"pall", pall},
-		{NULL, NULL},
-	};
+	instruction_t opcodes[] = {{"push", push}, {"pall", pall}, {NULL, NULL},};
+
 	temp = strdup(command);
 	cmd[0] = strtok_r(temp, " ", &ptr2);
 	cmd[1] = strtok_r(NULL, " ", &ptr2);
@@ -61,6 +59,7 @@ void execute(char *command, int line_number)
 		{
 			fprintf(stderr, "L%d: usage: push integer\n", line_number);
 			free(temp);
+			free_stack(&head);
 			exit(EXIT_FAILURE);
 		}
 		node = create_node(atoi(cmd[1]));
@@ -81,6 +80,7 @@ void execute(char *command, int line_number)
 	{
 		fprintf(stderr, "L%d: unknown instruction %s\n", line_number, cmd[0]);
 		free(temp);
+		free_stack(&head);
 		exit(EXIT_FAILURE);
 	}
 	free(temp);

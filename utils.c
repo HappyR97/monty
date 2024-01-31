@@ -71,6 +71,25 @@ stack_t *create_node(int value)
 }
 
 /**
+ * free_stack - Frees the stack
+ * @head: head pointer
+ *
+ * Return: void
+ */
+
+void free_stack(stack_t **head)
+{
+	stack_t *ptr;
+
+	while (*head != NULL)
+	{
+		ptr = (*head)->next;
+		free(*head);
+		*head = ptr;
+		}
+}
+
+/**
  * is_number - checks if a string is a number
  * @str: string to check
  *
