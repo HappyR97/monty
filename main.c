@@ -31,7 +31,7 @@ int main(int argc, char **argv)
 	}
 	line_number--;
 	free(buffer);
-	free_stack(&head);
+	free_stack();
 	return (0);
 }
 
