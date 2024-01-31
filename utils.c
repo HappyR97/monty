@@ -69,3 +69,27 @@ stack_t *create_node(int value)
 
 	return (new_node);
 }
+
+/**
+ * is_number - checks if a string is a number
+ * @str: string to check
+ *
+ * Return: 1 if number, 0 if not
+*/
+
+int is_number(char *str)
+{
+	if (str == NULL || *str == '\0')
+		return (0);
+	if (*str == '+' || *str == '-')
+		str++;
+	if (*str == '\0')
+		return (0);
+	while (*str)
+	{
+		if (!isdigit((unsigned char)*str))
+			return (0);
+		str++;
+	}
+	return (1);
+}

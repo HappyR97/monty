@@ -57,7 +57,15 @@ void execute(char *command, int line_number)
 	cmd[0] = strtok_r(temp, " ", &ptr2);
 	cmd[1] = strtok_r(NULL, " ", &ptr2);
 	if (strcmp(cmd[0], "push") == 0)
+	{
+		if (cmd[1] == NULL || !is_number(cmd[1]))
+		{
+			fprintf(stderr, "L%d: usage: push integer\n", line_number);
+			exit(EXIT_FAILURE);
+		}
 		node = create_node(atoi(cmd[1]));
+	}
+
 	while (opcodes[i].opcode)
 	{
 		if (strcmp(opcodes[i].opcode, cmd[0]) == 0)
