@@ -120,4 +120,6 @@ void handle_error(int reference, ...)
 		default:
 			break;
 	}
+	free_stack();
+	exit(EXIT_FAILURE);
 }
