@@ -46,12 +46,11 @@ void execute(char *command, int line_number)
 {
 	char *cmd[2], *temp, *ptr2;
 	int i = 0;
-	stack_t *node;
-
+	stack_t *node = NULL;
 	instruction_t opcodes[] = {
 		{"push", push},
 		{"pall", pall},
-		{'\0', 0},
+		{NULL, NULL},
 	};
 	temp = strdup(command);
 	cmd[0] = strtok_r(temp, " ", &ptr2);
@@ -61,16 +60,28 @@ void execute(char *command, int line_number)
 		if (cmd[1] == NULL || !is_number(cmd[1]))
 		{
 			fprintf(stderr, "L%d: usage: push integer\n", line_number);
+			free(temp);
 			exit(EXIT_FAILURE);
 		}
 		node = create_node(atoi(cmd[1]));
+		push(&node, line_number);
+		free(temp);
+		return;
 	}
-
 	while (opcodes[i].opcode)
 	{
 		if (strcmp(opcodes[i].opcode, cmd[0]) == 0)
-			opcodes[i].f(&node, line_number);
+		{
+			opcodes[i].f(&head, line_number);
+			break;
+		}
 		i++;
+	}
+	if (opcodes[i].opcode == NULL)
+	{
+		fprintf(stderr, "L%d: unknown instruction %sn", line_number, cmd[0]);
+		free(temp);
+		exit(EXIT_FAILURE);
 	}
 	free(temp);
 }
