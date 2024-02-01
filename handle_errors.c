@@ -69,6 +69,10 @@ void handle_more_error(int reference, ...)
 			opcode = va_arg(ag, char *);
 			fprintf(stderr, "L%d: can't %s, stack too short\n", line_number, opcode);
 			break;
+		case 9:
+			line_number = va_arg(ag, int);
+			fprintf(stderr, "L%d: division by zero\n", line_number);
+			break;
 		default:
 			break;
 	}
