@@ -105,7 +105,7 @@ void swap(stack_t **stack, unsigned int line_number)
 	(void) stack;
 
 	if (head == NULL || head->next == NULL)
-		handle_more_error(8, line_number);
+		handle_more_error(8, line_number, "swap");
 	temp = head->next;
 	head->next = temp->next;
 	if (temp->next != NULL)
