@@ -44,6 +44,7 @@ void select_opcode(char *opcode, char *value, int line_number)
 		{"sub", sub},
 		{"div", divide},
 		{"mul", mul},
+		{"mod", mod},
 		{"nop", nop},
 		{NULL, NULL}
 	};

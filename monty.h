@@ -58,6 +58,7 @@ void add(stack_t **stack, unsigned int line_number);
 void sub(stack_t **stack, unsigned int line_number);
 void divide(stack_t **stack, unsigned int line_number);
 void mul(stack_t **stack, unsigned int line_number);
+void mod(stack_t **stack, unsigned int line_number);
 /*Execution*/
 void parse(char *buffer, int line_number);
 void select_opcode(char *opcode, char *value, int line_number);
