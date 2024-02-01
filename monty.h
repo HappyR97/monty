@@ -53,6 +53,7 @@ void pall(stack_t **stack, unsigned int line_number);
 void pint(stack_t **stack, unsigned int line_number);
 void pop(stack_t **stack, unsigned int line_number);
 void swap(stack_t **stack, unsigned int line_number);
+void add(stack_t **stack, unsigned int line_number);
 /*Execution*/
 void parse(char *buffer, int line_number);
 void select_opcode(char *opcode, char *value, int line_number);

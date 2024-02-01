@@ -59,13 +59,15 @@ void handle_more_error(int reference, ...)
 {
 	va_list ag;
 	int line_number;
+	char *opcode;
 
 	va_start(ag, reference);
 	switch (reference)
 	{
 		case 8:
 			line_number = va_arg(ag, int);
-			fprintf(stderr, "L%d: can't swap, stack too short\n", line_number);
+			opcode = va_arg(ag, char *);
+			fprintf(stderr, "L%d: can't %s, stack too short\n", line_number, opcode);
 			break;
 		default:
 			break;
