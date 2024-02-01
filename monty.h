@@ -52,16 +52,19 @@ void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
 void pint(stack_t **stack, unsigned int line_number);
 void pop(stack_t **stack, unsigned int line_number);
+void swap(stack_t **stack, unsigned int line_number);
 /*Execution*/
 void parse(char *buffer, int line_number);
 void select_opcode(char *opcode, char *value, int line_number);
 void execute_opcode(opcode_func func, char *opcode,
 		char *value, int line_number);
+/*Error handling*/
+void handle_error(int reference, ...);
+void handle_more_error(int reference, ...);
 /*Utils*/
 stack_t *create_node(int value);
 void free_stack(void);
 int is_number(char *str);
 int is_line_empty(const char *line);
-void handle_error(int reference, ...);
 
 #endif /*MONTY_H*/

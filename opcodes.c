@@ -90,3 +90,28 @@ void pop(stack_t **stack, unsigned int line_number)
 		head->prev = NULL;
 	free(temp);
 }
+
+/**
+ * swap - swaps the top two elements of the stack
+ * @stack: pointer to stack node (unused)
+ * @line_number: number of line for opcode
+ *
+ * Return: void
+ */
+
+void swap(stack_t **stack, unsigned int line_number)
+{
+	stack_t *temp;
+	(void) stack;
+
+	if (head == NULL || head->next == NULL)
+		handle_more_error(8, line_number);
+	temp = head->next;
+	head->next = temp->next;
+	if (temp->next != NULL)
+		temp->next->prev = head;
+	temp->next = head;
+	head->prev = temp;
+	temp->prev = NULL;
+	head = temp;
+}

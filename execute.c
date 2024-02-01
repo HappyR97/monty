@@ -39,6 +39,7 @@ void select_opcode(char *opcode, char *value, int line_number)
 		{"pall", pall},
 		{"pint", pint},
 		{"pop", pop},
+		{"swap", swap},
 		{NULL, NULL}
 	};
 
