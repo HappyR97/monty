@@ -49,6 +49,9 @@ void select_opcode(char *opcode, char *value, int line_number)
 		{NULL, NULL}
 	};
 
+	if (opcode[0] == '#')
+		return;
+
 	for (flag = 1, i = 0; op_list[i].opcode != NULL; i++)
 	{
 		if (strcmp(opcode, op_list[i].opcode) == 0)
