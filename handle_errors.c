@@ -73,6 +73,14 @@ void handle_more_error(int reference, ...)
 			line_number = va_arg(ag, int);
 			fprintf(stderr, "L%d: division by zero\n", line_number);
 			break;
+		case 10:
+			line_number = va_arg(ag, int);
+			fprintf(stderr, "L%d: can't pchar, stack empty\n", line_number);
+			break;
+		case 111:
+			line_number = va_arg(ag, int);
+			fprintf(stderr, "L%d: can't pchar, value out of range\n", line_number);
+			break;
 		default:
 			break;
 	}
