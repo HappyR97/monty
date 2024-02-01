@@ -120,6 +120,10 @@ void handle_error(int reference, ...)
 			line_number = va_arg(ag, int);
 			fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
 			break;
+		case 7:
+			line_number = va_arg(ag, int);
+			fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
+			break;
 		default:
 			break;
 	}

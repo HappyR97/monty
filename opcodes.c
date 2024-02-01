@@ -68,3 +68,25 @@ void pint(stack_t **stack, unsigned int line_number)
 		handle_error(6, line_number);
 	printf("%d\n", head->n);
 }
+
+/**
+ * pop - removes the top element of the stack
+ * @stack: pointer to stack node (unused)
+ * @line_number: number of line for opcode
+ *
+ * Return: void
+ */
+
+void pop(stack_t **stack, unsigned int line_number)
+{
+	stack_t *temp;
+	(void) stack;
+
+	if (head == NULL)
+		handle_error(7, line_number);
+	temp = head;
+	head = head->next;
+	if (head != NULL)
+		head->prev = NULL;
+	free(temp);
+}
